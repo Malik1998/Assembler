@@ -1,0 +1,58 @@
+Turbo Assembler	 Version 4.1	    02/16/19 13:53:04	    Page 1
+1.asm
+
+
+
+      1	0000			     .model tiny
+      2	0000			     .code
+      3
+      4				     org 100h
+      5
+      6	0100  B4 02		     start: mov	ah, 2
+      7	0102  B2 FD			    mov	dl, 253
+      8	0104  CD 21			    int	21h
+      9
+     10	0106  B8 4C00			    mov	ax, 4c00h
+     11	0109  CD 21			    int	21h
+     12
+     13	010B			     .data
+     14	0000  E0 48 65 6C 6C 6F	20+  msg: db 224,'Hello	my wonderfull world!!!$'
+     15	      6D 79 20 77 6F 6E	64+
+     16	      65 72 66 75 6C 6C	20+
+     17	      77 6F 72 6C 64 21	21+
+     18	      21 24
+     19
+     20				     end start
+Turbo Assembler	 Version 4.1	    02/16/19 13:53:04	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "02/16/19"
+??FILENAME			  Text	 "1	  "
+??TIME				  Text	 "13:53:04"
+??VERSION			  Number 040A
+@32BIT				  Text	 0
+@CODE				  Text	 DGROUP
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _DATA
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 1
+@INTERFACE			  Text	 000H
+@MODEL				  Text	 1
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+MSG				  Near	 DGROUP:0000
+START				  Near	 DGROUP:0100
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  16  001E Word	  Public  DATA
+  _TEXT				  16  010B Word	  Public  CODE
+

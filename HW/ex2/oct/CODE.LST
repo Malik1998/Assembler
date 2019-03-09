@@ -1,0 +1,69 @@
+Turbo Assembler	 Version 4.1	    02/16/19 17:25:59	    Page 1
+code.asm
+
+
+
+      1	0000			     .model tiny
+      2	0000			     .code
+      3
+      4				     org 100h
+      5
+      6
+      7	0100  BB 0010		     start: mov	bx, 16 ; put some number to register
+      8	0103  8B C3			    mov	ax, bx
+      9	0105  B2 08			    mov	dl, 8 ;	put 2 to divisor
+     10
+     11	0107  F6 F2		     division: div dl
+     12	0109  80 C4 30			       add ah, '0' ; number to ascii
+     13	010C  8A D4			       mov dl, ah  ; number to print
+     14	010E  8A F0			       mov dh, al
+     15
+     16	0110  B4 02			       mov ah, 2    ;  printing
+     17	0112  CD 21			       int 21h	     ; printing
+     18
+     19	0114  B2 08			       mov dl, 8 ; put 2 as divider
+     20
+     21	0116  B4 00			       mov ah, 0 ; remained part to 0
+     22	0118  8A C6			       mov al, dh ; put	quotient to ax
+     23	011A  3C 00			       cmp al, 0 ; if =	0 go out of function
+     24	011C  75 E9			      jne division
+     25
+     26
+     27	011E  B8 4C00			    mov	ax, 4c00h
+     28
+     29	0121  CD 21			    int	21h
+     30
+     31				     end start
+Turbo Assembler	 Version 4.1	    02/16/19 17:25:59	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "02/16/19"
+??FILENAME			  Text	 "code	  "
+??TIME				  Text	 "17:25:59"
+??VERSION			  Number 040A
+@32BIT				  Text	 0
+@CODE				  Text	 DGROUP
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _TEXT
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 CODE
+@INTERFACE			  Text	 000H
+@MODEL				  Text	 1
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+DIVISION			  Near	 DGROUP:0107
+START				  Near	 DGROUP:0100
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  16  0000 Word	  Public  DATA
+  _TEXT				  16  0123 Word	  Public  CODE
+

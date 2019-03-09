@@ -1,0 +1,80 @@
+Turbo Assembler	 Version 4.1	    02/16/19 17:35:13	    Page 1
+code.asm
+
+
+
+      1	0000			     .model tiny
+      2	0000			     .code
+      3
+      4				     org 100h
+      5
+      6
+      7	0100  BB 002D		     start: mov	bx, 45 ; put some number to register
+      8	0103  8B C3			    mov	ax, bx
+      9	0105  B2 10			    mov	dl, 16 ; put 16	to divisor
+     10
+     11	0107  F6 F2		     division: div dl
+     12	0109  80 FC 0A			       cmp ah, 10
+     13	010C  73 06			       jae print_alphabet
+     14	010E  80 C4 30			       add ah, '0' ; number to ascii
+     15	0111  EB 07 90			       jmp after_alph_write
+     16
+     17	0114			     print_alphabet:
+     18	0114  80 EC 0A			      sub ah, 10
+     19	0117  80 C4 41			      add ah, 'A'
+     20
+     21	011A				     after_alph_write:
+     22	011A  8A D4			       mov dl, ah  ; number to print
+     23	011C  8A F0			       mov dh, al
+     24
+     25	011E  B4 02			       mov ah, 2    ;  printing
+     26	0120  CD 21			       int 21h	     ; printing
+     27
+     28	0122  B2 10			       mov dl, 16 ; put	2 as divider
+     29
+     30	0124  B4 00			       mov ah, 0 ; remained part to 0
+     31	0126  8A C6			       mov al, dh ; put	quotient to ax
+     32	0128  3C 00			       cmp al, 0 ; if =	0 go out of function
+     33	012A  75 DB			      jne division
+     34
+     35
+     36	012C  B8 4C00			    mov	ax, 4c00h
+     37
+     38	012F  CD 21			    int	21h
+     39
+     40				     end start
+Turbo Assembler	 Version 4.1	    02/16/19 17:35:13	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "02/16/19"
+??FILENAME			  Text	 "code	  "
+??TIME				  Text	 "17:35:12"
+??VERSION			  Number 040A
+@32BIT				  Text	 0
+@CODE				  Text	 DGROUP
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _TEXT
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 CODE
+@INTERFACE			  Text	 000H
+@MODEL				  Text	 1
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+AFTER_ALPH_WRITE		  Near	 DGROUP:011A
+DIVISION			  Near	 DGROUP:0107
+PRINT_ALPHABET			  Near	 DGROUP:0114
+START				  Near	 DGROUP:0100
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  16  0000 Word	  Public  DATA
+  _TEXT				  16  0131 Word	  Public  CODE
+

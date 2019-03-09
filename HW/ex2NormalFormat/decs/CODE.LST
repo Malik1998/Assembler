@@ -1,0 +1,95 @@
+Turbo Assembler	 Version 4.1	    02/16/19 20:03:25	    Page 1
+code.asm
+
+
+
+      1	0000			     .model tiny
+      2	0000			     .code
+      3
+      4				     org 100h
+      5
+      6
+      7	0100  BB 002D		     start: mov	bx, 45 ; put some number to register
+      8	0103  8B C3			    mov	ax, bx
+      9	0105  B2 0A			    mov	dl, 10 ; put 16	to divisor
+     10	0107  B9 0001			    mov	cx, 1
+     11
+     12	010A  F6 F2		     division: div dl
+     13	010C  80 FC 0A			       cmp ah, 10
+     14	010F  73 06			       jae print_10
+     15	0111  80 C4 30			       add ah, '0' ; number to ascii
+     16	0114  EB 0A 90			       jmp after_10_write
+     17
+     18	0117			     print_10:
+     19	0117  B8 0000			     mov ax, 0
+     20	011A  05 0030			     add ax, '0'
+     21	011D  50			     push ax
+     22	011E  B4 01			     mov ah, 1
+     23
+     24	0120				     after_10_write:
+     25	0120  8A D4			       mov dl, ah  ; number to print
+     26	0122  8A F0			       mov dh, al
+     27
+     28	0124  B8 0000			       mov ax, 0
+     29	0127  8A C2			       mov al, dl
+     30	0129  50			       push ax
+     31	012A  41			       inc cx
+     32
+     33	012B  B2 0A			       mov dl, 10 ; put	2 as divider
+     34
+     35	012D  B4 00			       mov ah, 0 ; remained part to 0
+     36	012F  8A C6			       mov al, dh ; put	quotient to ax
+     37	0131  3C 00			       cmp al, 0 ; if =	0 go out of function
+     38	0133  75 D5			      jne division
+     39
+     40	0135				    printing:
+     41	0135  58				      pop ax
+     42	0136  8A D0				      mov dl, al
+     43	0138  B4 02				      mov ah, 2
+     44	013A  CD 21				      int 21h
+     45	013C  49				      dec cx
+     46	013D  83 F9 00				      cmp cx, 0
+     47	0140  75 F3				      jne printing
+     48
+     49
+     50	0142  B8 4C00			    mov	ax, 4c00h
+     51
+     52	0145  CD 21			    int	21h
+     53
+     54				     end start
+Turbo Assembler	 Version 4.1	    02/16/19 20:03:25	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "02/16/19"
+??FILENAME			  Text	 "code	  "
+??TIME				  Text	 "20:03:25"
+??VERSION			  Number 040A
+@32BIT				  Text	 0
+@CODE				  Text	 DGROUP
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _TEXT
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 CODE
+@INTERFACE			  Text	 000H
+@MODEL				  Text	 1
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+AFTER_10_WRITE			  Near	 DGROUP:0120
+DIVISION			  Near	 DGROUP:010A
+PRINTING			  Near	 DGROUP:0135
+PRINT_10			  Near	 DGROUP:0117
+START				  Near	 DGROUP:0100
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  16  0000 Word	  Public  DATA
+  _TEXT				  16  0147 Word	  Public  CODE
+
